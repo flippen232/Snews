@@ -127,17 +127,17 @@
   <section class="section">
     <h2>Snusanbefalinger</h2>
     <div class="snus-card">
-      <img src="general.png" alt="General Classic">
-      <div>
-        <strong>General Classic Portion</strong>
-        <p>En balansert og tradisjonell smak – populær blant de som liker klassisk tobakk.</p>
-      </div>
-    </div>
-    <div class="snus-card">
-      <img src="lyft.png" alt="LYFT Cool Mint">
+      <img src="lyft.png" alt="LYFT">
       <div>
         <strong>LYFT Cool Mint</strong>
         <p>Frisk mintsmak uten tobakk – passer for deg som liker en kjølig opplevelse.</p>
+      </div>
+    </div>
+    <div class="snus-card">
+      <img src="general.png" alt="General">
+      <div>
+        <strong>General Classic Portion</strong>
+        <p>En balansert og tradisjonell smak – populær blant de som liker klassisk tobakk.</p>
       </div>
     </div>
   </section>
@@ -145,6 +145,9 @@
   <section class="section">
     <h2>Rate din snus</h2>
     <form onsubmit="leggTilVurdering(event)">
+      <label for="navn">Ditt navn:</label>
+      <input type="text" id="navn" required>
+
       <label for="snusnavn">Navn på snus:</label>
       <input type="text" id="snusnavn" required>
 
@@ -161,16 +164,16 @@
   <section class="section">
     <h2>Fun Facts</h2>
     <div class="fun-fact">
-      <img src="fact1.png" alt="Snusposer">
-      <p>Visste du at svensk snus er forbudt i EU – bortsett fra i Sverige?</p>
+      <img src="fact1.png" alt="Snus og myr">
+      <p>En mann overlevde å sitte fast i en myr i 3 dager – han hadde kun snus!</p>
     </div>
     <div class="fun-fact">
-      <img src="fact2.png" alt="LYFT poser">
-      <p>LYFT ble en av de første nikotinposene helt uten tobakk.</p>
+      <img src="fact2.png" alt="Killa snus">
+      <p>Killa Grape Ice er en av de mest populære smaksvariantene blant unge voksne.</p>
     </div>
     <div class="fun-fact">
-      <img src="fact3.png" alt="General historie">
-      <p>General har vært på markedet siden 1866!</p>
+      <img src="fact3.png" alt="Velo">
+      <p>Velo Freezing Peppermint er kjent for sin sterke mentoleffekt – ikke for nybegynnere!</p>
     </div>
   </section>
 </div>
@@ -179,16 +182,54 @@
   &copy; 2025 Snews – Alle rettigheter forbeholdt
 </footer>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBhLdO3fAfOXBpPNNMaDBTVDaxVCTTOZRU",
+    authDomain: "snewsapp-c5b21.firebaseapp.com",
+    projectId: "snewsapp-c5b21",
+    storageBucket: "snewsapp-c5b21.firebasestorage.app",
+    messagingSenderId: "316530833158",
+    appId: "1:316530833158:web:aca388ff1928faab4d1087",
+    measurementId: "G-GMVTCMEPD0"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
   function leggTilVurdering(e) {
     e.preventDefault();
-    const navn = document.getElementById("snusnavn").value;
-    const rating = document.getElementById("rating").value;
-    const div = document.createElement("div");
-    div.innerHTML = `<p><strong>${navn}</strong>: ${"★".repeat(rating)}</p>`;
-    document.getElementById("vurderinger").appendChild(div);
-    document.getElementById("snusnavn").value = "";
+    const navn = document.getElementById("navn").value;
+    const snusnavn = document.getElementById("snusnavn").value;
+    const rating = parseInt(document.getElementById("rating").value);
+
+    db.collection("vurderinger").add({
+      navn: navn,
+      snus: snusnavn,
+      rating: rating,
+      tidspunkt: new Date()
+    }).then(() => {
+      document.getElementById("navn").value = "";
+      document.getElementById("snusnavn").value = "";
+      hentVurderinger();
+    });
   }
+
+  function hentVurderinger() {
+    const container = document.getElementById("vurderinger");
+    container.innerHTML = "<h3>Alle vurderinger:</h3>";
+    db.collection("vurderinger").orderBy("tidspunkt", "desc").get().then(snapshot => {
+      snapshot.forEach(doc => {
+        const v = doc.data();
+        const el = document.createElement("p");
+        el.innerHTML = `<strong>${v.navn}</strong> om <strong>${v.snus}</strong>: ${"★".repeat(v.rating)}`;
+        container.appendChild(el);
+      });
+    });
+  }
+
+  window.onload = hentVurderinger;
 </script>
 
 </body>
