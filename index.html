@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snews - Snusnyheter og Anbefalinger</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f1e8;
+      color: #2e2a23;
+    }
+
+    header {
+      background-color: #4a7741;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #8b5e3c;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      color: #4a7741;
+    }
+
+    .snus-card {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-left: 5px solid #8b5e3c;
+    }
+
+    label, input, select {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input[type="submit"] {
+      background-color: #4a7741;
+      color: white;
+      padding: 10px;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #8b5e3c;
+      color: white;
+    }
+
+    /* RESPONSIVE STYLES */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: #8b5e3c;
+        padding: 10px 0;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Snews</h1>
+  <p>Alt om snus – vurderinger, nyheter og anbefalinger</p>
+</header>
+
+<nav>
+  <div class="nav-container">
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#">Hjem</a>
+      <a href="#">Anbefalinger</a>
+      <a href="#">Rate Snus</a>
+      <a href="#">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <section class="section">
+    <h2>Velkommen til Snews!</h2>
+    <p>Her får du siste nytt om snus, vurderinger fra brukere, og personlige anbefalinger basert på din smak.</p>
+  </section>
+
+  <section class="section">
+    <h2>Snusanbefalinger</h2>
+    <div class="snus-card">
+      <h3>General Classic Portion</h3>
+      <p>En balansert og tradisjonell smak – populær blant de som liker klassisk tobakk.</p>
+    </div>
+    <div class="snus-card">
+      <h3>LYFT Cool Mint</h3>
+      <p>Frisk mintsmak uten tobakk – passer for deg som liker en kjølig opplevelse.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Rate din snus</h2>
+    <form>
+      <label for="snusnavn">Navn på snus:</label>
+      <input type="text" id="snusnavn" name="snusnavn" required>
+
+      <label for="rating">Din vurdering (1-5):</label>
+      <select id="rating" name="rating">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+
+      <input type="submit" value="Send vurdering">
+    </form>
+  </section>
+</div>
+
+<footer>
+  &copy; 2025 Snews – Snusnyheter & Anbefalinger
+</footer>
+
+<script>
+  function toggleMenu() {
+    const navLinks = document.getElementById("navLinks");
+    navLinks.classList.toggle("active");
+  }
+</script>
+
+</body>
+</html>
