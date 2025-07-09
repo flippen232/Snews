@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="no">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Snews – Snusnyheter og Anbefalinger</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Snews – Snusnyheter og Anbefalinger</title>
+<style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -165,92 +166,80 @@
   </style>
 </head>
 <body>
-
 <header>
-  <img src="logo.png" alt="Snews logo">
-  <h1>SNEWS</h1>
-  <p>Nyheter om snus – vurderinger og anbefalinger</p>
+<img alt="Snews logo" src="logo.png"/>
+<h1>SNEWS</h1>
+<p>Nyheter om snus – vurderinger og anbefalinger</p>
 </header>
-
 <nav>
-  <a href="#">Hjem</a>
-  <a href="#">Anbefalinger</a>
-  <a href="#">Rate Snus</a>
-  <a href="#">Fun Facts</a>
+<a href="#">Hjem</a>
+<a href="#">Anbefalinger</a>
+<a href="#">Rate Snus</a>
+<a href="#">Fun Facts</a>
 </nav>
-
 <div class="container">
-  <section class="section">
-    <h2>Snusanbefalinger</h2>
-    <div class="snus-card">
-      <img src="lyft.png" alt="LYFT">
-      <div>
-        <strong>LYFT Cool Mint</strong>
-        <p>Frisk mintsmak uten tobakk – passer for deg som liker en kjølig opplevelse.</p>
-      </div>
-    </div>
-    <div class="snus-card">
-      <img src="general.png" alt="General">
-      <div>
-        <strong>General Classic Portion</strong>
-        <p>En balansert og tradisjonell smak – populær blant de som liker klassisk tobakk.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <h2>Rate din snus</h2>
-    <form id="reviewForm">
-      <label for="name">Navn:</label>
-      <input type="text" id="name" name="name" required>
-
-      <label for="snus">Snus:</label>
-      <input type="text" id="snus" name="snus" required>
-
-      <label for="rating">Vurdering (1-5):</label>
-      <input type="number" id="rating" name="rating" min="1" max="5" required>
-
-      <label for="comment">Kommentar:</label>
-      <textarea id="comment" name="comment" rows="3" placeholder="Valgfritt..."></textarea>
-
-      <button type="submit">Send vurdering</button>
-    </form>
-    <div id="reviewsContainer"></div>
-  </section>
-
-  <section class="section">
-    <h2>Fun Facts</h2>
-    <div class="fun-fact">
-      <img src="fact1.png" alt="Snus og myr">
-      <p>En mann overlevde å sitte fast i en myr i 3 dager – han hadde kun snus!</p>
-    </div>
-    <div class="fun-fact">
-      <img src="fact2.png" alt="Killa snus">
-      <p>Killa Grape Ice er en av de mest populære smaksvariantene blant unge voksne.</p>
-    </div>
-    <div class="fun-fact">
-      <img src="fact3.png" alt="Velo">
-      <p>Velo Freezing Peppermint er kjent for sin sterke mentoleffekt – ikke for nybegynnere!</p>
-    </div>
-  </section>
+<section class="section">
+<h2>Snusanbefalinger</h2>
+<div class="snus-card">
+<img alt="LYFT" src="lyft.png"/>
+<div>
+<strong>LYFT Cool Mint</strong>
+<p>Frisk mintsmak uten tobakk – passer for deg som liker en kjølig opplevelse.</p>
 </div>
-
+</div>
+<div class="snus-card">
+<img alt="General" src="general.png"/>
+<div>
+<strong>General Classic Portion</strong>
+<p>En balansert og tradisjonell smak – populær blant de som liker klassisk tobakk.</p>
+</div>
+</div>
+</section>
+<section class="section">
+<h2>Rate din snus</h2>
+<form id="reviewForm">
+<label for="name">Navn:</label>
+<input id="name" name="name" required="" type="text"/>
+<label for="snus">Snus:</label>
+<input id="snus" name="snus" required="" type="text"/>
+<label for="rating">Vurdering (1-5):</label>
+<input id="rating" max="5" min="1" name="rating" required="" type="number"/>
+<label for="comment">Kommentar:</label>
+<textarea id="comment" name="comment" placeholder="Valgfritt..." rows="3"></textarea>
+<button type="submit">Send vurdering</button>
+</form>
+<div id="reviewsContainer"></div>
+</section>
+<section class="section">
+<h2>Fun Facts</h2>
+<div class="fun-fact">
+<img alt="Snus og myr" src="fact1.png"/>
+<p>En mann overlevde å sitte fast i en myr i 3 dager – han hadde kun snus!</p>
+</div>
+<div class="fun-fact">
+<img alt="Killa snus" src="fact2.png"/>
+<p>Killa Grape Ice er en av de mest populære smaksvariantene blant unge voksne.</p>
+</div>
+<div class="fun-fact">
+<img alt="Velo" src="fact3.png"/>
+<p>Velo Freezing Peppermint er kjent for sin sterke mentoleffekt – ikke for nybegynnere!</p>
+</div>
+</section>
+</div>
 <footer>
-  &copy; 2025 Snews – Alle rettigheter forbeholdt
+  © 2025 Snews – Alle rettigheter forbeholdt
 </footer>
-
 <!-- SnusNiklas Chatbot -->
 <div id="chatbot">
-  <div id="chat-header"><img src="snusniklas_avatar3.png" alt="Avatar" style="width:24px; height:24px; border-radius:50%; vertical-align:middle; margin-right:8px;">💬 SnusNiklas</div>
-  <div id="chat-messages">
-    <div class="bot">Hei! Jeg er SnusNiklas 😎 Spør meg om snus!</div>
-  </div>
-  <div id="chat-input">
-    <input type="text" id="userInput" placeholder="Skriv noe...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
+<div id="chat-header"><img alt="Avatar" src="snusniklas_avatar3.png" style="width:24px; height:24px; border-radius:50%; vertical-align:middle; margin-right:8px;"/>💬 SnusNiklas</div>
+<div id="chat-messages">
+<div class="bot">Hei! Jeg er SnusNiklas 😎 Spør meg om snus!</div>
 </div>
-
+<div id="chat-input">
+<input id="userInput" placeholder="Skriv noe..." type="text"/>
+<button onclick="sendMessage()">Send</button>
+</div>
+</div>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -309,7 +298,6 @@
 
   loadReviews();
 </script>
-
 <script>
   function sendMessage() {
     const input = document.getElementById("userInput");
@@ -343,6 +331,38 @@
     return "Oi, det vet jeg ikke... kanskje jeg må ta en snus og tenke litt 🤔";
   }
 </script>
+<style>
+#snusniklas-chat-toggle {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 9999;
+    background-color: #5e4b3c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    cursor: pointer;
+}
+</style>
+<button id="snusniklas-chat-toggle">–</button>
+<script>
+const toggleBtn = document.getElementById('snusniklas-chat-toggle');
+const chatBox = document.getElementById('chat-container');
+let chatVisible = true;
 
+toggleBtn.onclick = () => {
+    if (chatVisible) {
+        chatBox.style.display = 'none';
+        toggleBtn.textContent = '+';
+    } else {
+        chatBox.style.display = 'block';
+        toggleBtn.textContent = '–';
+    }
+    chatVisible = !chatVisible;
+};
+</script>
 </body>
 </html>
