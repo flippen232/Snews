@@ -76,13 +76,13 @@
       object-fit: cover;
     }
 
-    label, input, select {
+    label, input, select, textarea {
       display: block;
       margin-top: 10px;
       width: 100%;
     }
 
-    input[type="submit"] {
+    input[type="submit"], button {
       background-color: #3e5f3e;
       color: white;
       padding: 10px;
@@ -91,7 +91,7 @@
       cursor: pointer;
     }
 
-    #vurderinger {
+    #reviewsContainer {
       margin-top: 20px;
     }
 
@@ -120,11 +120,6 @@
 
 <div class="container">
   <section class="section">
-    <h2>Velkommen til Snews!</h2>
-    <p>Få de siste nyhetene om snus, vurderinger fra brukere og personlige anbefalinger basert på din smak.</p>
-  </section>
-
-  <section class="section">
     <h2>Snusanbefalinger</h2>
     <div class="snus-card">
       <img src="lyft.png" alt="LYFT">
@@ -144,21 +139,22 @@
 
   <section class="section">
     <h2>Rate din snus</h2>
-    <form onsubmit="leggTilVurdering(event)">
-      <label for="navn">Ditt navn:</label>
-      <input type="text" id="navn" required>
+    <form id="reviewForm">
+      <label for="name">Navn:</label>
+      <input type="text" id="name" name="name" required>
 
-      <label for="snusnavn">Navn på snus:</label>
-      <input type="text" id="snusnavn" required>
+      <label for="snus">Snus:</label>
+      <input type="text" id="snus" name="snus" required>
 
-      <label for="rating">Din vurdering (1-5):</label>
-      <select id="rating">
-        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-      </select>
+      <label for="rating">Vurdering (1-5):</label>
+      <input type="number" id="rating" name="rating" min="1" max="5" required>
 
-      <input type="submit" value="Send vurdering">
+      <label for="comment">Kommentar:</label>
+      <textarea id="comment" name="comment" rows="3" placeholder="Valgfritt..."></textarea>
+
+      <button type="submit">Send vurdering</button>
     </form>
-    <div id="vurderinger"></div>
+    <div id="reviewsContainer"></div>
   </section>
 
   <section class="section">
@@ -183,53 +179,63 @@
 </footer>
 
 <!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyBhLdO3fAfOXBpPNNMaDBTVDaxVCTTOZRU",
     authDomain: "snewsapp-c5b21.firebaseapp.com",
     projectId: "snewsapp-c5b21",
-    storageBucket: "snewsapp-c5b21.firebasestorage.app",
+    storageBucket: "snewsapp-c5b21.appspot.com",
     messagingSenderId: "316530833158",
     appId: "1:316530833158:web:aca388ff1928faab4d1087",
     measurementId: "G-GMVTCMEPD0"
   };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
 
-  function leggTilVurdering(e) {
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const form = document.getElementById('reviewForm');
+  const reviewsContainer = document.getElementById('reviewsContainer');
+
+  async function loadReviews() {
+    reviewsContainer.innerHTML = "<h3>Alle vurderinger:</h3>";
+    const q = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const review = document.createElement("div");
+      review.innerHTML = `<strong>${data.name}</strong> om <em>${data.snus}</em>: ${"★".repeat(data.rating)}<br>${data.comment ? `"${data.comment}"` : ""}<hr>`;
+      reviewsContainer.appendChild(review);
+    });
+  }
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const navn = document.getElementById("navn").value;
-    const snusnavn = document.getElementById("snusnavn").value;
-    const rating = parseInt(document.getElementById("rating").value);
+    const name = form.name.value.trim();
+    const snus = form.snus.value.trim();
+    const rating = parseInt(form.rating.value);
+    const comment = form.comment.value.trim();
 
-    db.collection("vurderinger").add({
-      navn: navn,
-      snus: snusnavn,
-      rating: rating,
-      tidspunkt: new Date()
-    }).then(() => {
-      document.getElementById("navn").value = "";
-      document.getElementById("snusnavn").value = "";
-      hentVurderinger();
+    if (!name || !snus || rating < 1 || rating > 5) {
+      alert("Fyll ut alle påkrevde felter.");
+      return;
+    }
+
+    await addDoc(collection(db, "reviews"), {
+      name,
+      snus,
+      rating,
+      comment,
+      timestamp: serverTimestamp()
     });
-  }
 
-  function hentVurderinger() {
-    const container = document.getElementById("vurderinger");
-    container.innerHTML = "<h3>Alle vurderinger:</h3>";
-    db.collection("vurderinger").orderBy("tidspunkt", "desc").get().then(snapshot => {
-      snapshot.forEach(doc => {
-        const v = doc.data();
-        const el = document.createElement("p");
-        el.innerHTML = `<strong>${v.navn}</strong> om <strong>${v.snus}</strong>: ${"★".repeat(v.rating)}`;
-        container.appendChild(el);
-      });
-    });
-  }
+    form.reset();
+    loadReviews();
+  });
 
-  window.onload = hentVurderinger;
+  loadReviews();
 </script>
 
 </body>
